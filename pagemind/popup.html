@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PageMind AI</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- API Key Setup Screen -->
+  <div id="setup-screen" class="screen hidden">
+    <div class="setup-card">
+      <div class="logo-mark">PM</div>
+      <h1 class="setup-title">PageMind <span>AI</span></h1>
+      <p class="setup-sub">Summarize pages. Chat with content. Powered by Groq.</p>
+      <div class="input-group">
+        <label>Groq API Key</label>
+        <input type="password" id="api-key-input" placeholder="gsk_..." autocomplete="off" />
+        <span class="hint">Free at <a href="https://console.groq.com" target="_blank">console.groq.com</a></span>
+      </div>
+      <button id="save-key-btn" class="btn-primary">Activate PageMind →</button>
+      <p id="setup-error" class="error-msg hidden"></p>
+    </div>
+  </div>
+
+  <!-- Main Dashboard -->
+  <div id="main-screen" class="screen hidden">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="logo-mark small">PM</div>
+        <span class="app-name">PageMind</span>
+      </div>
+      <div class="topbar-right">
+        <div class="page-badge" id="page-domain">—</div>
+        <button class="icon-btn" id="settings-btn" title="Settings">⚙</button>
+      </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="summary">
+        <span class="tab-icon">◈</span> Summary
+      </button>
+      <button class="tab-btn" data-tab="chat">
+        <span class="tab-icon">◉</span> Chat
+      </button>
+      <button class="tab-btn" data-tab="insights">
+        <span class="tab-icon">◎</span> Insights
+      </button>
+    </nav>
+
+    <!-- Summary Tab -->
+    <div id="tab-summary" class="tab-content active">
+      <div class="tab-inner">
+        <div class="page-info" id="page-info-bar">
+          <div class="page-title-row">
+            <span class="pill">Page</span>
+            <span id="page-title-display" class="page-title-text">Loading...</span>
+          </div>
+        </div>
+        <div class="summary-controls">
+          <div class="control-row">
+            <label class="control-label">Summary Style</label>
+            <div class="chip-group">
+              <button class="chip active" data-style="concise">Concise</button>
+              <button class="chip" data-style="detailed">Detailed</button>
+              <button class="chip" data-style="bullets">Bullet Points</button>
+              <button class="chip" data-style="eli5">ELI5</button>
+            </div>
+          </div>
+        </div>
+        <button id="summarize-btn" class="btn-action">
+          <span class="btn-text">Summarize This Page</span>
+          <span class="btn-icon">→</span>
+        </button>
+        <div id="summary-output" class="output-box hidden">
+          <div class="output-header">
+            <span class="output-label">Summary</span>
+            <button class="copy-btn" id="copy-summary">Copy</button>
+          </div>
+          <div id="summary-text" class="output-text"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Tab -->
+    <div id="tab-chat" class="tab-content">
+      <div class="chat-container">
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-welcome">
+            <div class="welcome-icon">◈</div>
+            <p>Ask anything about this page. I've got the full content ready.</p>
+          </div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chat-input" placeholder="Ask about this page..." />
+          <button id="chat-send-btn" class="send-btn">↑</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insights Tab -->
+    <div id="tab-insights" class="tab-content">
+      <div class="tab-inner">
+        <button id="insights-btn" class="btn-action">
+          <span class="btn-text">Generate Insights</span>
+          <span class="btn-icon">◎</span>
+        </button>
+        <div id="insights-output" class="hidden">
+          <div class="insight-cards" id="insight-cards"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+      <div class="loader-ring"></div>
+      <p id="loading-text">Thinking...</p>
+    </div>
+
+  </div>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel" class="settings-panel hidden">
+    <div class="settings-header">
+      <span>Settings</span>
+      <button id="close-settings">✕</button>
+    </div>
+    <div class="settings-body">
+      <label>Groq API Key</label>
+      <input type="password" id="settings-api-key" placeholder="gsk_..." />
+      <button id="update-key-btn" class="btn-primary small">Update Key</button>
+      <p id="settings-msg" class="success-msg hidden">Key updated!</p>
+      <div class="divider"></div>
+      <button id="clear-chat-btn" class="btn-ghost">Clear Chat History</button>
+      <button id="reset-btn" class="btn-danger">Reset Extension</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
